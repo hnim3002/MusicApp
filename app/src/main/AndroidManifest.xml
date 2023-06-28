@@ -37,6 +37,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".LoginHandle.ForgotPassword"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".LoginHandle.Login"
             android:exported="false"
             android:theme="@style/Theme.Material3.Light.NoActionBar"
