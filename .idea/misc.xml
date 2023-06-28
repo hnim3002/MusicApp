@@ -1,0 +1,104 @@
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/drawable/background_color.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/drawable/bottom.xml" value="0.1295" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/drawable/round_black_10.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/drawable/round_black_blue_10.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/drawable/round_blackkkkk.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/layout-v28/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/layout/activity_music_player.xml" value="0.19010416666666666" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - Copy/app/src/main/res/layout/music_adapter_layout.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/hinh_nen.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/ic_arrow_down.xml" value="0.218" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/ic_noun_arrow_up_1017662.xml" value="0.218" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/ic_sort.xml" value="0.218" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/round_black_10.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/round_black_blue_10.xml" value="0.204" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/drawable/splash_screen.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/layout/costom_service.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/layout/music_adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/layout/popup_sort.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/menu/delete_menu.xml" value="0.19635416666666666" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao - Copy/app/src/main/res/menu/sort_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_du_thongbao/app/src/main/res/layout/activity_main.xml" value="0.18072916666666666" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy/app/src/main/res/layout/activity_main.xml" value="0.1546875" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_arrow_back.xml" value="0.1425" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_back_adobe_express.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_next_adobe_express.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_pause.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_play_adobe_express.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/drawable/ic_play_arrow.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/layout/costom_service.xml" value="0.24010416666666667" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du - Copy1/app/src/main/res/layout/music_adapter_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_gan_du/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/costum_seekbar.xml" value="0.16" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/ic_arrow_back.xml" value="0.162" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/ic_search.xml" value="0.15" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/ic_shuffle_adobe_express.xml" value="0.15" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/round_black_10.xml" value="0.1285" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/round_black_blue_10.xml" value="0.1285" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/drawable/seekbar_progress.xml" value="0.162" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu - Copy (3)/app/src/main/res/layout/music_adapter_layout.xml" value="0.25" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable-v24/round_new.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/background_color.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/costom_thumb.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/costum_seekbar.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_af_adobe_express.xml" value="0.194" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_arrow_back.xml" value="0.194" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_back_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_baseline_white.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_next_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_play_adobe_express.xml" value="0.194" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_play_arrow.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_player_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_repeat1_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_repeatBlack_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_repeat_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_repeatblack_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_shuffle.xml" value="0.124" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_shuffle_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_shuffle_white.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_shuffleblack_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_skip_previous.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/ic_stop_adobe_express.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/round_black_10.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/round_black_blue_10.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/round_top.xml" value="0.213" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/drawable/seekbar_progress.xml" value="0.18" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/font/font.xml" value="0.2833333333333333" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/layout/activity_music_player.xml" value="0.24818840579710144" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music - ban_thieu/app/src/main/res/layout/music_adapter_layout.xml" value="0.4" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/costom_thumb.xml" value="0.1355" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_launcher_background.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_loop.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_menu.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_play_arrow.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_repeat_2.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_search.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_shuffle.xml" value="0.189" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_skip_next.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/ic_skip_previous.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/round_black_10.xml" value="0.174" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/drawable/round_black_blue_10.xml" value="0.185" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/layout/activity_main.xml" value="0.152" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/layout/activity_music_player.xml" value="0.21784420289855072" />
+        <entry key="..\:/Android Studio 2/BTL_app_Music/app/src/main/res/layout/music_adapter_layout.xml" value="0.4" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

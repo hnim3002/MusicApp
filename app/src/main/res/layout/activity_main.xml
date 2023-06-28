@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include layout="@layout/bottom_sheet_dialog"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/playList"
+            android:layout_width="match_parent"
+            android:layout_above="@+id/bottomBar"
+            android:layout_height="match_parent">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPager2"
+                android:allowClickWhenDisabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:id="@+id/bottomBar"
+            android:layout_above="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_pink"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <SeekBar
+                    android:id="@+id/playerSeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="10dp"
+                    android:max="100"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="0dp"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/costum_seekbar"
+                    android:thumb="@android:color/transparent" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/toPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/spinDis1"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/disk" />
+
+                <LinearLayout
+                    android:id="@+id/playerText2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/spinDis1"
+                    android:layout_toStartOf="@+id/BTN"
+                    android:layout_marginStart="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/nowPlaying"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="marquee"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/lobsterr"
+                        android:singleLine="true"
+                        android:text="song name"
+                        android:textColor="#000000"
+                        android:textSize="17sp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/nowPlaying2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-8dp"
+                        android:text="song name"
+                        android:singleLine="true"
+                        android:textColor="#8e6472"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/BTN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:id="@+id/previousBtn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:padding="10dp"
+                        android:src="@drawable/ic_back_adobe_express" />
+
+                    <ImageView
+                        android:id="@+id/playPauseImg"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_play_arrow" />
+
+                    <ImageView
+                        android:id="@+id/nextBtn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+
+                        android:padding="10dp"
+                        android:src="@drawable/ic_next_adobe_express" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNav"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            app:labelVisibilityMode="labeled"
+            android:layout_alignParentBottom="true"
+            app:itemActiveIndicatorStyle="@style/Theme.AppCompat"
+            app:itemHorizontalTranslationEnabled="false"
+
+            android:background="@drawable/border_set"
+            app:itemIconTint="@color/costum_color_nav"
+            app:itemTextColor="@color/costum_color_nav"
+            app:menu="@menu/bottom_nav" />
+
+
+    </RelativeLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
