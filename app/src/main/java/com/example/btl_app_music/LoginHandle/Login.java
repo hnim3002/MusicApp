@@ -32,7 +32,7 @@ public class Login extends AppCompatActivity {
     private CardView loginBtn;
     private TextInputEditText editTextEmail, editTextPassword;
     private CheckBox rememberCk;
-    private TextView toRegister;
+    private TextView toRegister, toForgotPassword;
 
     private FirebaseAuth mAuth;
 
@@ -61,6 +61,16 @@ public class Login extends AppCompatActivity {
         toRegister = findViewById(R.id.to_register);
         progressBar = findViewById(R.id.progressBarLog);
         textLogin = findViewById(R.id.textLogin);
+        toForgotPassword = findViewById(R.id.toForgotPassword);
+
+
+        toForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
 
         toRegister.setOnClickListener(new View.OnClickListener() {
             @Override
