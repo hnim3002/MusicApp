@@ -1,15 +1,23 @@
 package com.example.btl_app_music.Fragment.SubFragment;
 
+import android.Manifest;
+import android.content.ContentResolver;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +43,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,6 +89,18 @@ public class OnlineList extends Fragment {
     private int itemType;
 
     private String listSongName;
+
+    private final ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(
+            new ActivityResultContracts.RequestPermission(),
+            new ActivityResultCallback<Boolean>() {
+                @Override
+                public void onActivityResult(Boolean result) {
+                    if (result) {
+                        getMusicFiles();
+                    }
+                }
+            }
+    );
 
 
 
@@ -127,15 +149,6 @@ public class OnlineList extends Fragment {
         musicListsOnline = new ArrayList<>();
 
 
-        final SwipeRefreshLayout pullToRefresh = requireView().findViewById(R.id.content);
-        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                musicRecyclerView.setAdapter(musicAdapter); // your code
-                pullToRefresh.setRefreshing(false);
-            }
-        });
-
         sortBtn =  requireView().findViewById(R.id.sortBtn);
 
         searchView = requireView().findViewById(R.id.findSong);
@@ -161,7 +174,7 @@ public class OnlineList extends Fragment {
             public void onClick(View view) {
                 MainActivity a = (MainActivity)getActivity();
                 assert a != null;
-                a.onPressRandomBtnOnline(false);
+                a.onPressRandomBtnOnline(musicListsOnline);
             }
         });
 
@@ -215,6 +228,10 @@ public class OnlineList extends Fragment {
                 listSongName = bundle.getString("listSongName");
                 getUserPublicSong(listSongName);
                 break;
+            case 7:
+                onClickRequestPermission();
+                break;
+
         }
 
 
@@ -222,6 +239,18 @@ public class OnlineList extends Fragment {
         musicAdapter = new MusicAdapterOnline(itemType, musicListsOnline, getContext());
 
         musicRecyclerView.setAdapter(musicAdapter);
+    }
+
+    public void onClickRequestPermission() {
+
+        if(requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            getMusicFiles();
+
+
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
     }
 
     public void getListSong() {
@@ -538,6 +567,41 @@ public class OnlineList extends Fragment {
         mDatabase.removeValue();
 
         musicAdapter.Delete(position);
+    }
+
+    private void getMusicFiles() {
+        ContentResolver contentResolver = requireActivity().getContentResolver();
+        Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+
+        List<MusicList> musicLists2 = new ArrayList<>();
+
+        Cursor cursor = contentResolver.query(uri, null, MediaStore.Audio.Media.DATA+" LIKE?", new String[]{"%.mp3%"}, null);
+        while(cursor.moveToNext()){
+            final String getMusicFileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+            final String getArtisName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
+
+
+            String getDuration = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.AudioColumns.DURATION));
+
+            String generateDuration = null;
+
+            if (getDuration != null) {
+                generateDuration = String.format(Locale.getDefault(),"%02d:%02d",
+                        TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(getDuration)),
+                        TimeUnit.MILLISECONDS.toSeconds(Long.parseLong(getDuration)) -
+                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Long.parseLong(getDuration))));
+            }
+
+            String getPath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
+
+            final MusicList musicList = new MusicList(getMusicFileName, getArtisName, generateDuration, getPath);
+
+            if (getDuration != null) {
+                musicListsOnline.add(musicList);
+            }
+        }
+
+        cursor.close();
     }
 
 

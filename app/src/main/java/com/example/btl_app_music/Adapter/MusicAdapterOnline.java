@@ -140,7 +140,6 @@ public class MusicAdapterOnline extends RecyclerView.Adapter<RecyclerView.ViewHo
             myViewHolder.rootLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MainActivity.onOf = false;
                     if(OnlineList.musicListsOnline.size() != list.size()) {
                         if(playingPosition <= list.size()) {
                             list.get(playingPosition).setPlaying(false);
@@ -160,7 +159,7 @@ public class MusicAdapterOnline extends RecyclerView.Adapter<RecyclerView.ViewHo
                     Position.currentIndex = a;
                     Position.currentName = list2.getTitle();
                     songChangeListener.onChanged(Position.currentIndex);
-                    MainActivity.musicPlayerList.addAll(list);
+                    MainActivity.musicPlayerList = new ArrayList<>(list);
                     notifyDataSetChanged();
                 }
             });

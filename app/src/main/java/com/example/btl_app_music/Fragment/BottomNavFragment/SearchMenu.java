@@ -13,12 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.btl_app_music.Fragment.SubFragment.LocalList;
 import com.example.btl_app_music.Fragment.SubFragment.OnlineList;
 import com.example.btl_app_music.Fragment.SubFragment.Playlist;
 import com.example.btl_app_music.MainActivity;
 import com.example.btl_app_music.R;
-import com.makeramen.roundedimageview.RoundedImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,8 +107,12 @@ public class SearchMenu extends Fragment {
             @Override
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.searchFragment, new LocalList());
-                fragmentTransaction.addToBackStack(MainActivity.localTAG);
+                OnlineList onlineList = new OnlineList();
+                Bundle bundle = new Bundle();
+                bundle.putInt("online", 7);
+                onlineList.setArguments(bundle);
+                fragmentTransaction.replace(R.id.searchFragment, onlineList);
+                fragmentTransaction.addToBackStack(MainActivity.onlineTAG);
                 fragmentTransaction.commit();
             }
         });

@@ -107,6 +107,24 @@ public class Playlist extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+        searchView = requireView().findViewById(R.id.searchBtn);
+
+
+        searchView.clearFocus();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                findPlaylist(newText);
+                return true;
+            }
+        });
+
         playlistName = requireView().findViewById(R.id.playlistName);
 
         recyclerView = requireView().findViewById(R.id.musicRecyclerViewPlaylist);
@@ -271,6 +289,22 @@ public class Playlist extends Fragment {
         fragmentTransaction.replace(R.id.playlistFragment, onlineList);
         fragmentTransaction.addToBackStack(MainActivity.onlineTAG);
         fragmentTransaction.commit();
+    }
+
+    public void findPlaylist(String s) {
+        ArrayList<Item> items = new ArrayList<>();
+        for (Item list : playlistItem) {
+            if (list.getItemName().toLowerCase().contains(s.toLowerCase())) {
+                items.add(list);
+            }
+        }
+        if (items.isEmpty()) {
+            Toast.makeText(getContext(),"No song found", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            searchPlaylistAdapter.updateList(items);
+        }
+
     }
 
 

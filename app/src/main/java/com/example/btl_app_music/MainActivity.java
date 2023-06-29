@@ -3,31 +3,19 @@ package com.example.btl_app_music;
 import static com.example.btl_app_music.Service.Service.mediaPlayer;
 import static com.example.btl_app_music.Service.Service.timer;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -37,32 +25,25 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.btl_app_music.Fragment.BottomNavFragment.AccountInfo;
 import com.example.btl_app_music.Fragment.SubFragment.AddSongList;
-import com.example.btl_app_music.Fragment.SubFragment.LocalList;
 import com.example.btl_app_music.Fragment.SubFragment.OnlineList;
 import com.example.btl_app_music.Fragment.BottomNavFragment.SearchMenu;
 import com.example.btl_app_music.Fragment.BottomNavFragment.ViewPagerAdapter;
 import com.example.btl_app_music.Fragment.SubFragment.Playlist;
 import com.example.btl_app_music.Object.MusicList;
 import com.example.btl_app_music.Service.Service;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
@@ -75,14 +56,14 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
     //tesst
 
     public static final int MY_REQUEST_CODE = 10;
-    public static List<MusicList> musicPlayerList;
+    public static List<MusicList> musicPlayerList = new ArrayList<>();
 
     public static  boolean isMusicPlayerOpen = false;
 
     public static final String addSonglist = AddSongList.class.getName();
     public static final String playlistTAG = Playlist.class.getName();
     public static final String onlineTAG = OnlineList.class.getName();
-    public static final String localTAG = LocalList.class.getName();
+
     /*private LinearLayout bottomSheetLayout;
 
     private BottomSheetBehavior bottomSheetBehavior;*/
@@ -325,261 +306,128 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
         if(mediaPlayer != null) {
 
             setStatusSeekBar();
-            if(onOf) {
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (repeatFlag == 0 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    if (repeatFlag == 0 && shuffleFlag == false) {
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
 
-                            int nextSongListPosition = currentSongListPosition + 1;
-                            if(nextSongListPosition >= LocalList.musicLists.size()) {
-                                nextSongListPosition = 0;
-                            }
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-
-
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
+                        int nextSongListPosition = currentSongListPosition + 1;
+                        if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
+                            nextSongListPosition = 0;
                         }
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
+                    }
 
-                        else if (repeatFlag == 2 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
+                    else if (repeatFlag == 2 && shuffleFlag == false) {
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
 
-                            int nextSongListPosition;
-                            if (repeatOneFlag == 0) {
-                                nextSongListPosition =  currentSongListPosition;
-                                repeatOneFlag++;
-                            }
-                            else {
-                                nextSongListPosition = currentSongListPosition + 1;
-                                repeatOneFlag = 0;
-                                repeatFlag = 0;
-
-                            }
-                            if(nextSongListPosition >= LocalList.musicLists.size()) {
-                                nextSongListPosition = 0;
-                            }
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
+                        int nextSongListPosition;
+                        if (repeatOneFlag == 0) {
+                            nextSongListPosition =  currentSongListPosition;
+                            repeatOneFlag++;
                         }
+                        else {
+                            nextSongListPosition = currentSongListPosition + 1;
+                            repeatOneFlag = 0;
+                            repeatFlag = 0;
 
-                        else if (repeatFlag == 1 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = currentSongListPosition;
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
                         }
-                        if(shuffleFlag && repeatFlag == 0) {
+                        if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
+                            nextSongListPosition = 0;
+                        }
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
+                    }
+
+                    else if (repeatFlag == 1 && shuffleFlag == false) {
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
+
+                        int nextSongListPosition = currentSongListPosition;
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
+                    }
+                    if(shuffleFlag && repeatFlag == 0) {
+                        int i = -1;
+                        i = getRandomNumber(i);
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
+
+                        int nextSongListPosition = i;
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
+                    }
+                    else if(shuffleFlag && repeatFlag == 1) {
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
+
+                        int nextSongListPosition = currentSongListPosition;
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
+                    }
+                    else if(shuffleFlag && repeatFlag == 2) {
+                        mediaPlayer.reset();
+                        isPlaying = false;
+                        playerSeekBar.setProgress(0);
+
+                        int nextSongListPosition;
+                        if (repeatOneFlag == 0) {
+                            nextSongListPosition =  currentSongListPosition;
+                            repeatOneFlag++;
+                        }
+                        else {
                             int i = -1;
                             i = getRandomNumber(i);
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
+                            nextSongListPosition = i;
+                            repeatOneFlag = 0;
+                            repeatFlag = 0;
 
-                            int nextSongListPosition = i;
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
                         }
-                        else if(shuffleFlag && repeatFlag == 1) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = currentSongListPosition;
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
-                        }
-                        else if(shuffleFlag && repeatFlag == 2) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition;
-                            if (repeatOneFlag == 0) {
-                                nextSongListPosition =  currentSongListPosition;
-                                repeatOneFlag++;
-                            }
-                            else {
-                                int i = -1;
-                                i = getRandomNumber(i);
-                                nextSongListPosition = i;
-                                repeatOneFlag = 0;
-                                repeatFlag = 0;
-
-                            }
-                            LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-                            LocalList.musicAdapter.updateList(LocalList.musicLists);
-                            onChanged(nextSongListPosition);
-                        }
+                        MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
+                        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                        /*Position.getInstance().reset();*/
+                        Position.currentIndex = nextSongListPosition;
+                        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+                        OnlineList.musicAdapter.notifyDataSetChanged();
+                        onChanged(nextSongListPosition);
                     }
-                });
-            } else {
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-                        if (repeatFlag == 0 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = currentSongListPosition + 1;
-                            if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
-                                nextSongListPosition = 0;
-                            }
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-
-                        else if (repeatFlag == 2 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition;
-                            if (repeatOneFlag == 0) {
-                                nextSongListPosition =  currentSongListPosition;
-                                repeatOneFlag++;
-                            }
-                            else {
-                                nextSongListPosition = currentSongListPosition + 1;
-                                repeatOneFlag = 0;
-                                repeatFlag = 0;
-
-                            }
-                            if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
-                                nextSongListPosition = 0;
-                            }
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-
-                        else if (repeatFlag == 1 && shuffleFlag == false) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = currentSongListPosition;
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-                        if(shuffleFlag && repeatFlag == 0) {
-                            int i = -1;
-                            i = getRandomNumber(i);
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = i;
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-                        else if(shuffleFlag && repeatFlag == 1) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition = currentSongListPosition;
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-                        else if(shuffleFlag && repeatFlag == 2) {
-                            mediaPlayer.reset();
-                            isPlaying = false;
-                            playerSeekBar.setProgress(0);
-
-                            int nextSongListPosition;
-                            if (repeatOneFlag == 0) {
-                                nextSongListPosition =  currentSongListPosition;
-                                repeatOneFlag++;
-                            }
-                            else {
-                                int i = -1;
-                                i = getRandomNumber(i);
-                                nextSongListPosition = i;
-                                repeatOneFlag = 0;
-                                repeatFlag = 0;
-
-                            }
-                            MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
-                            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-                            /*Position.getInstance().reset();*/
-                            Position.currentIndex = nextSongListPosition;
-                            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-                            OnlineList.musicAdapter.notifyDataSetChanged();
-                            onChanged(nextSongListPosition);
-                        }
-                    }
-                });
-            }
-
+                }
+            });
         }
-
     }
 
     private void handleLayoutMusic(int actionMusic) {
@@ -605,11 +453,9 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
     }
 
     private void setInfoSong() {
-        if(onOf) {
-            list = LocalList.musicLists.get(Position.currentIndex);
-        } else {
-            list = MainActivity.musicPlayerList.get(Position.currentIndex);
-        }
+
+        list = MainActivity.musicPlayerList.get(Position.currentIndex);
+
 
         nowPlaying.setText(list.getTitle());
         nowPlaying2.setText(list.getArtist());
@@ -652,11 +498,9 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
     public int getRandomNumber(int a) {
         Random ran = new Random();
         while(true) {
-            if(onOf) {
-                a = ran.nextInt(LocalList.musicLists.size());
-            } else {
-                a = ran.nextInt(MainActivity.musicPlayerList.size());
-            }
+
+            a = ran.nextInt(MainActivity.musicPlayerList.size());
+
             if(a != currentSongListPosition) {
                 break;
             }
@@ -763,69 +607,12 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
         startService(intent);
     }
 
-    public void onPressRandomBtnOffline(boolean a) {
-        onOf = a;
+    public void onPressRandomBtnOnline(List<MusicList> list) {
+        musicPlayerList = new ArrayList<>(list);
         int i = 0;
         /*Position.getInstance().reset();*/
         Position.currentIndex = getRandomNumber(i);
-        onChanged(Position.currentIndex);
-        if(!shuffleFlag && repeatFlag == 0) {
-            shuffleFlag = true;
-        }
-        else if(!shuffleFlag && repeatFlag == 1) {
-            shuffleFlag = true;
-
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    shuffleSwich = getRandomNumber(shuffleSwich);
-                    mediaPlayer.reset();
-                    timer.purge();
-                    timer.cancel();
-                    isPlaying = false;
-                    playerSeekBar.setProgress(0);
-                    int nextSongListPosition = shuffleSwich;
-                    LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                    LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                    LocalList.musicAdapter.notifyDataSetChanged();
-                    onChanged(nextSongListPosition);
-                }
-            });
-        }
-
-        else if(!shuffleFlag && repeatFlag == 2) {
-            shuffleFlag = true;
-
-            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                    shuffleSwich = getRandomNumber(shuffleSwich);
-                    mediaPlayer.reset();
-                    timer.purge();
-                    timer.cancel();
-                    isPlaying = false;
-                    playerSeekBar.setProgress(0);
-                    int nextSongListPosition = shuffleSwich;
-                    LocalList.musicLists.get(currentSongListPosition).setPlaying(false);
-                    LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-                    LocalList.musicAdapter.notifyDataSetChanged();
-                    onChanged(nextSongListPosition);
-                }
-            });
-        }
-        else {
-            shuffleFlag = false;
-
-        }
-        OnlineList.musicAdapter.notifyDataSetChanged();
-        LocalList.musicAdapter.notifyDataSetChanged();
-    }
-
-    public void onPressRandomBtnOnline(boolean a) {
-        onOf = a;
-        int i = 0;
-        /*Position.getInstance().reset();*/
-        Position.currentIndex = getRandomNumber(i);
+        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
         onChanged(Position.currentIndex);
         if(!shuffleFlag && repeatFlag == 0) {
             shuffleFlag = true;
@@ -845,6 +632,7 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
                     int nextSongListPosition = shuffleSwich;
                     MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
                     MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                    Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
                     OnlineList.musicAdapter.notifyDataSetChanged();
                     onChanged(nextSongListPosition);
                 }
@@ -865,6 +653,7 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
                     int nextSongListPosition = shuffleSwich;
                     MainActivity.musicPlayerList.get(currentSongListPosition).setPlaying(false);
                     MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+                    Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
                     OnlineList.musicAdapter.notifyDataSetChanged();
                     onChanged(nextSongListPosition);
                 }
@@ -875,7 +664,6 @@ public class MainActivity extends AppCompatActivity implements SongChangeListene
         }
 
         OnlineList.musicAdapter.notifyDataSetChanged();
-        LocalList.musicAdapter.notifyDataSetChanged();
     }
 
 

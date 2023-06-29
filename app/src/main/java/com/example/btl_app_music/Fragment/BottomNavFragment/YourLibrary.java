@@ -23,12 +23,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.btl_app_music.Adapter.LibraryPlaylistAdapter;
 import com.example.btl_app_music.Fragment.SubFragment.OnlineList;
 import com.example.btl_app_music.MainActivity;
 import com.example.btl_app_music.Object.Item;
+import com.example.btl_app_music.Object.MusicList;
 import com.example.btl_app_music.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -140,6 +142,22 @@ public class YourLibrary extends Fragment {
 
         assert user != null;
         Glide.with(requireActivity()).load(user.getPhotoUrl()).error(R.drawable.default_avatar).into(userAvatar);
+
+        searchViewBtn.clearFocus();
+
+        searchViewBtn.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                findPlaylist(newText);
+                return true;
+            }
+        });
+
 
 
 
@@ -430,6 +448,23 @@ public class YourLibrary extends Fragment {
         mDatabase.removeValue();
 
         playlistAdapter.Delete(position);
+    }
+
+
+    public void findPlaylist(String s) {
+        ArrayList<Item> items = new ArrayList<>();
+        for (Item list : itemList) {
+            if (list.getItemName().toLowerCase().contains(s.toLowerCase())) {
+                items.add(list);
+            }
+        }
+        if (items.isEmpty()) {
+            Toast.makeText(getContext(),"No song found", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            playlistAdapter.updateList(items);
+        }
+
     }
 
     @Override

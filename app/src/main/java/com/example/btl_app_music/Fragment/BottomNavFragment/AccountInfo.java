@@ -211,10 +211,8 @@ public class AccountInfo extends Fragment {
     }
 
     public void onClickRequestPermission() {
-        MainActivity activity = (MainActivity) getActivity();
 
         if(requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            assert activity != null;
             openGallery();
 
 

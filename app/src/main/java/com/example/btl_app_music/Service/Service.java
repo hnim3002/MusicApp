@@ -18,7 +18,6 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.btl_app_music.Fragment.SubFragment.LocalList;
 import com.example.btl_app_music.Fragment.SubFragment.OnlineList;
 import com.example.btl_app_music.MainActivity;
 import com.example.btl_app_music.Object.MusicList;
@@ -64,19 +63,12 @@ public class Service extends android.app.Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-        if(MainActivity.onOf) {
-            if(list != LocalList.musicLists.get(Position.currentIndex)) {
-                list = LocalList.musicLists.get(Position.currentIndex);
-                startMusic(list);
-                sendNotification(list);
-            }
 
-        } else {
-            if(list !=  MainActivity.musicPlayerList.get(Position.currentIndex)) {
-                list =  MainActivity.musicPlayerList.get(Position.currentIndex);
-                startMusic(list);
-                sendNotification(list);
-            }
+
+        if(list !=  MainActivity.musicPlayerList.get(Position.currentIndex)) {
+            list =  MainActivity.musicPlayerList.get(Position.currentIndex);
+            startMusic(list);
+            sendNotification(list);
         }
 
         if((MainActivity.repeatFlag == 1 || MainActivity.repeatFlag == 2) && MainActivity.repeatIsPlaying) {
@@ -115,82 +107,42 @@ public class Service extends android.app.Service {
 
     private void prevMusic() {
 
-
-        if(MainActivity.onOf) {
-            int prevSongListPosition = Position.currentIndex - 1;
-            if(prevSongListPosition < 0) {
-                prevSongListPosition = LocalList.musicLists.size() - 1;
-            }
-            LocalList.musicLists.get(Position.currentIndex).setPlaying(false);
-            LocalList.musicLists.get(prevSongListPosition).setPlaying(true);
-
-            /*Position.getInstance().reset();*/
-            Position.currentIndex = prevSongListPosition;
-
-            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-
-            LocalList.musicAdapter.notifyDataSetChanged();
-            list = LocalList.musicLists.get(Position.currentIndex);
-            startMusic(LocalList.musicLists.get(Position.currentIndex));
-            sendNotification(LocalList.musicLists.get(Position.currentIndex));
-            sendAction(ACTION_PREV);
-        } else {
-            int prevSongListPosition = Position.currentIndex - 1;
-            if(prevSongListPosition < 0) {
-                prevSongListPosition = MainActivity.musicPlayerList.size() - 1;
-            }
-            MainActivity.musicPlayerList.get(Position.currentIndex).setPlaying(false);
-            MainActivity.musicPlayerList.get(prevSongListPosition).setPlaying(true);
-
-            /*Position.getInstance().reset();*/
-            Position.currentIndex = prevSongListPosition;
-
-            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-
-            OnlineList.musicAdapter.notifyDataSetChanged();
-            list = MainActivity.musicPlayerList.get(Position.currentIndex);
-            startMusic(MainActivity.musicPlayerList.get(Position.currentIndex));
-            sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
-            sendAction(ACTION_PREV);
+        int prevSongListPosition = Position.currentIndex - 1;
+        if(prevSongListPosition < 0) {
+            prevSongListPosition = MainActivity.musicPlayerList.size() - 1;
         }
+        MainActivity.musicPlayerList.get(Position.currentIndex).setPlaying(false);
+        MainActivity.musicPlayerList.get(prevSongListPosition).setPlaying(true);
 
+        /*Position.getInstance().reset();*/
+        Position.currentIndex = prevSongListPosition;
+
+        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+
+        OnlineList.musicAdapter.notifyDataSetChanged();
+        list = MainActivity.musicPlayerList.get(Position.currentIndex);
+        startMusic(MainActivity.musicPlayerList.get(Position.currentIndex));
+        sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
+        sendAction(ACTION_PREV);
 
     }
 
     private void nextMusic() {
 
-
-        if(MainActivity.onOf) {
-            int nextSongListPosition = Position.currentIndex + 1;
-            if(nextSongListPosition >= LocalList.musicLists.size()) {
-                nextSongListPosition = 0;
-            }
-            LocalList.musicLists.get(Position.currentIndex).setPlaying(false);
-            LocalList.musicLists.get(nextSongListPosition).setPlaying(true);
-            /*Position.getInstance().reset();*/
-            Position.currentIndex = nextSongListPosition;
-            Position.currentName = LocalList.musicLists.get(Position.currentIndex).getTitle();
-            LocalList.musicAdapter.notifyDataSetChanged();
-            list = LocalList.musicLists.get(Position.currentIndex);
-            startMusic(LocalList.musicLists.get(Position.currentIndex));
-            sendNotification(LocalList.musicLists.get(Position.currentIndex));
-            sendAction(ACTION_NEXT);
-        } else {
-            int nextSongListPosition = Position.currentIndex + 1;
-            if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
-                nextSongListPosition = 0;
-            }
-            MainActivity.musicPlayerList.get(Position.currentIndex).setPlaying(false);
-            MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
-            /*Position.getInstance().reset();*/
-            Position.currentIndex = nextSongListPosition;
-            Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
-            OnlineList.musicAdapter.notifyDataSetChanged();
-            list = MainActivity.musicPlayerList.get(Position.currentIndex);
-            startMusic(MainActivity.musicPlayerList.get(Position.currentIndex));
-            sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
-            sendAction(ACTION_NEXT);
+        int nextSongListPosition = Position.currentIndex + 1;
+        if(nextSongListPosition >= MainActivity.musicPlayerList.size()) {
+            nextSongListPosition = 0;
         }
+        MainActivity.musicPlayerList.get(Position.currentIndex).setPlaying(false);
+        MainActivity.musicPlayerList.get(nextSongListPosition).setPlaying(true);
+        /*Position.getInstance().reset();*/
+        Position.currentIndex = nextSongListPosition;
+        Position.currentName = MainActivity.musicPlayerList.get(Position.currentIndex).getTitle();
+        OnlineList.musicAdapter.notifyDataSetChanged();
+        list = MainActivity.musicPlayerList.get(Position.currentIndex);
+        startMusic(MainActivity.musicPlayerList.get(Position.currentIndex));
+        sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
+        sendAction(ACTION_NEXT);
 
 
     }
@@ -199,11 +151,8 @@ public class Service extends android.app.Service {
         if(!isPlaying) {
             mediaPlayer.start();
             isPlaying = true;
-            if(MainActivity.onOf) {
-                sendNotification(LocalList.musicLists.get(Position.currentIndex));
-            } else {
-                sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
-            }
+            sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
+
 
         }
         sendAction(ACTION_RESUME);
@@ -213,11 +162,9 @@ public class Service extends android.app.Service {
         if(isPlaying) {
             mediaPlayer.pause();
             isPlaying = false;
-            if(MainActivity.onOf) {
-                sendNotification(LocalList.musicLists.get(Position.currentIndex));
-            } else {
-                sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
-            }
+
+            sendNotification(MainActivity.musicPlayerList.get(Position.currentIndex));
+
         }
         sendAction(ACTION_PAUSE);
     }
