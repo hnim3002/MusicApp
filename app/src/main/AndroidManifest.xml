@@ -58,8 +58,9 @@
 
         <service
             android:name=".Service.Service"
-            android:exported="true"
-            android:stopWithTask="true">
+            android:exported="false"
+            android:stopWithTask="true"
+            android:permission="TODO">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
             </intent-filter>

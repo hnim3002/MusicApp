@@ -30,6 +30,7 @@ import java.util.Set;
 public class MusicAdapterOnline extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private List<MusicList> list;
+
     private final Context context;
 
     private int playlistType;
